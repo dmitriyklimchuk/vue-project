@@ -1,26 +1,44 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <AppHeader/>
+  <AppMain/>
+  <AppFooter/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppHeader from "@/components/layout/AppHeader";
+import AppFooter from "@/components/layout/AppFooter";
+import AppMain from "@/components/layout/AppMain";
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AppHeader,
+    AppFooter,
+    AppMain,
+  },
+
+  data() {
+    return {
+      albums: '',
+
+    }
+  },
+
+  mounted() {
+    fetch('https://jsonplaceholder.typicode.com/albums')
+        .then(response => response.json())
+        .then(json => this.albums = json)
   }
 }
 </script>
 
 <style lang="scss">
-#app {
+.app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #ecf0f1;
+  min-height: 100vh;
 }
 </style>
