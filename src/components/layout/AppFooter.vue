@@ -1,12 +1,16 @@
 <template>
-  <footer class="footer text-center">
-    <h1>I am a footer</h1>
+  <footer >
+    <AppFooterAcc />
   </footer>
 </template>
 
 <script>
+import AppFooterAcc from "@/components/blocks/AppFooterAcc";
 export default {
-  name: "AppFooter"
+  name: "AppFooter",
+  components: {
+    AppFooterAcc
+  }
 }
 </script>
 

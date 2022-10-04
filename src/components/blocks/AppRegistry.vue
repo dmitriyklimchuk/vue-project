@@ -1,24 +1,37 @@
 <template>
-  <div class="form__wrapper p-5">
+  <div class="form__wrapper p-5 flex-column d-flex">
+    <AppFormTitle :second-title="formTitle" />
     <form action=""
           class="form d-flex flex-column"
           ref="registryForm"
           method="post">
-      <input class="form-control"
-             placeholder="Please Input Your Email"
-             type="email">
-      <input class="form-control"
-             placeholder="Please Input Your Pass"
-             type="password">
-      <button type="button"
-              class="btn btn-info" @click="registry($event)">Info</button>
+      <AppInput
+          type="email"
+          placeholder="Please Input Your Email"
+          />
+      <AppInput
+          type="password"
+          placeholder="Please Input Your Pass"/>
+      <button
+          type="button"
+          class="btn btn-info mt-1 mb-1"
+          @click="registry($event)"
+      >
+        SUBMIT
+      </button>
     </form>
   </div>
 </template>
 
 <script>
+import AppFormTitle from "@/components/elements/AppFormTitle";
+
 export default {
   name: "AppRegistry",
+  components: {
+    AppFormTitle
+  },
+  props: ['formTitle'],
   methods: {
     registry() {
       console.log(this.$refs.registryForm);
@@ -39,9 +52,13 @@ export default {
       })
 
       if(formData.length == inputsLength) {
-        alert('ALl is ok');
-        this.isLogged = true
+        this.$emit('app-logging'); // емітимо (файримо, подаємо сигнал що подія відбулась)
       }
+    }
+  },
+  data() {
+    return {
+
     }
   }
 }

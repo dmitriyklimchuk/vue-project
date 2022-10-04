@@ -3,10 +3,19 @@
     <div class="container">
       <div class="row">
         <AppTitle></AppTitle>
+
+        <a href="#" class="btn btn-lg btn-outline-primary" @click.prevent="logOut" v-if="isLogged">Log Out</a>
+
+        <!-- робимо кондішн виводиди чи не виводити рег. форму, кондішн зв'язаний з проп isLogged-->
+        <!-- прокидуємо через пропси поперті тайтла з парент компонента -->
+        <!-- слухаємо подію яка має відбутися в чайлд копмоненті,при сигнлалі (еміті) викликаємо свій метод loginIn-->
         <AppRegistry
             v-if="!isLogged"
-        />
-        <AppLIst v-else></AppLIst>
+            :form-title="formLoginTitle"
+            v-on:app-logging="loginIn" />
+        <AppLIst
+            v-else
+            :albums="albums" />
       </div>
     </div>
   </main>
@@ -19,6 +28,7 @@ import AppLIst from "@/components/blocks/AppLIst";
 
 export default {
   name: "AppMain",
+  props: ['albums'], // данф передані з парент компонента
   components: {
     AppRegistry,
     AppTitle,
@@ -26,7 +36,16 @@ export default {
   },
   data() {
     return {
-      isLogged: false
+      isLogged: false,
+      formLoginTitle: 'Log In',
+    }
+  },
+  methods: {
+    loginIn() {
+      this.isLogged =  true
+    },
+    logOut() {
+      this.isLogged =  false
     }
   }
 }
@@ -35,5 +54,6 @@ export default {
 <style scoped lang="scss">
 .main {
   padding: 25px;
+  margin: auto;
 }
 </style>
