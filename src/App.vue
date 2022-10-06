@@ -1,6 +1,6 @@
 <template>
   <AppHeader/> <!-- Використовую свій компонент, можливо ось так  <AppHeader/> або <AppHeader></>AppHeader>-->
-  <AppMain :albums="albums"/>
+  <AppMain :albumsA="albums"/>
   <AppFooter/>
 </template>
 
@@ -115,6 +115,12 @@ export default {
       commentsFromDataToProvide: this.comments
     }
   },
+
+  methods: {
+    foo() {
+
+    }
+  }
 }
 </script>
 

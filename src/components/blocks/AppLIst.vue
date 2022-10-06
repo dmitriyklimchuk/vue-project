@@ -12,8 +12,17 @@
 
   <h3 class="text-center items__list-title">{{ titleComments }}</h3>
 
+  <app-filter-button
+      v-on:filter-signal="filterMethod"
+      v-on:filter-by-query="filterByQ($event)"
+      v-on:filter-reset="resetMethod">
+
+  </app-filter-button>
+
+  <div v-if="mySearchResult">Sorry Search is Empty</div>
+
   <div class="row items__list">
-    <div v-for="comment in commentsFromDataToProvide"
+    <div v-for="comment in comments"
          v-bind:key="comment.key"
          class="col-6 col-md-4 col-xl-3 text-center list__item-comment"
     >
@@ -26,17 +35,56 @@
 </template>
 
 <script>
+import AppFilterBtn from "@/components/elements/AppFilterBtn";
 export default {
   name: "AppLIst",
+  components: {
+    'app-filter-button':AppFilterBtn
+  },
   inject: ['commentsFromDataToProvide'], // інджектимо дату коментарів, оминаючи мейн компонент
   props: ['albums'],
   data() {
     return {
-      users: this.commentsFromDataToProvide,
+      comments: this.commentsFromDataToProvide,
+      commentsForReset: this.commentsFromDataToProvide,
       titleAlbums: 'My Albums',
       titleComments: 'My Comments',
+      arr: [1,3,5,5,1,1],
+      mySearchResult: false
     }
   },
+
+  methods : {
+    filterMethod() {
+      let filteredByDomain = (this.comments).filter((elem)=> elem.email.includes('.biz'));
+      this.comments = filteredByDomain
+    },
+
+    resetMethod() {
+      this.comments = this.commentsForReset
+    },
+
+    filterByQ(searchPhrase) {
+      let mySearchResult = (this.commentsForReset).filter((elem)=> elem.email.includes(searchPhrase));
+      this.comments = mySearchResult
+      console.log(mySearchResult.length)
+
+      // if(mySearchResult.length === 0) {
+      //   this.mySearchResult = true
+      // } else {
+      //   this.comments = mySearchResult
+      // }
+
+      mySearchResult.length === 0 ? this.mySearchResult = true : this.comments = mySearchResult
+    }
+  },
+
+  mounted() {
+    console.log(this.commentsForReset);
+    console.log(this.comments);
+  }
+
+
 }
 </script>
 
