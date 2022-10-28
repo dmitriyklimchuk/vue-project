@@ -2,6 +2,7 @@
   <main class="main">
     <div class="container">
       <div class="row">
+        <h1>{{ TitleForEvent }}</h1>
         <AppTitle></AppTitle>
 
         <a href="#" class="btn btn-lg btn-outline-primary" @click.prevent="logOut" v-if="isLogged">Log Out</a>
@@ -29,18 +30,19 @@ import AppTitle from "@/components/blocks/AppTitle";
 import AppLIst from "@/components/blocks/AppLIst";
 
 export default {
+  data() {
+    return {
+      isLogged: true,
+      formLoginTitle: 'Log In',
+      TitleForEvent: 'Can Change from Event Bus'
+    }
+  },
   name: "AppMain",
   props: ['albumsA'], // данф передані з парент компонента
   components: {
     AppRegistry,
     AppTitle,
     AppLIst
-  },
-  data() {
-    return {
-      isLogged: true,
-      formLoginTitle: 'Log In',
-    }
   },
   methods: {
     loginIn() {
@@ -49,6 +51,13 @@ export default {
     logOut() {
       this.isLogged =  false
     }
+  },
+
+  created() {
+    this.emitter.on('messageBus',(data) => {
+      console.log(data);
+      console.log(this.TitleForEvent = data);
+    })
   }
 }
 </script>
